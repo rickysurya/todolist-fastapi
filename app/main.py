@@ -13,18 +13,18 @@ class Post(BaseModel):
     content: str
 
 
-@app.get("/getposts")
+@app.get("/get_tasks")
 def get_posts():
     return {
-        "Message": "Post retrieved successfully"
+        "Message": "Tasks are retrieved"
     }
 
 
-@app.post("/createposts")
+@app.post("/create_tasks")
 def create_posts(post: dict = Body(...)):
     print(post)
     return {
-        "Message": "Post successfully created!"
+        "Message": "Tasks are added!"
     }
 
 
