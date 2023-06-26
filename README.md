@@ -1,5 +1,5 @@
 # To-Do-List App
-A simple CRUD app to manage day to day task
+A simple CRUD app to manage day to day task built with FastAPI
 
 ### How to run
 Install the dependencies required to run the app
