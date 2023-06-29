@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 
-class StudentSchema(BaseModel):
+class TaskSchema(BaseModel):
     title: str = Field(...)
     task_description: str = Field(...)
     
@@ -16,7 +16,7 @@ class StudentSchema(BaseModel):
         }
 
 
-class UpdateStudentModel(BaseModel):
+class UpdateTaskModel(BaseModel):
     title: Optional[str]
     task_description: Optional[str]
 

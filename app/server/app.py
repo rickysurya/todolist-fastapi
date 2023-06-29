@@ -1,6 +1,10 @@
 from fastapi import FastAPI
 
+from app.server.routes.task import router as TaskRouter
+
 app = FastAPI()
+
+app.include_router(TaskRouter, tags=["Task"], prefix="/task")
 
 
 @app.get("/", tags=["Root"])
