@@ -16,3 +16,54 @@ from app.server.models.task import (
 )
 
 router = APIRouter()
+
+#Create
+@router.post("/", response_description="task data added into the database")
+async def add_task_data(task: TaskSchema = Body(...)):
+    task = jsonable_encoder(task)
+    new_task = await add_task(task)
+    return ResponseModel(new_task, "task added successfully.")
+
+#Read
+@router.get("/", response_description="tasks retrieved")
+async def get_tasks():
+    tasks = await retrieve_tasks()
+    if tasks:
+        return ResponseModel(tasks, "tasks data retrieved successfully")
+    return ResponseModel(tasks, "Empty list returned")
+
+
+@router.get("/{id}", response_description="task data retrieved")
+async def get_task_data(id):
+    task = await retrieve_task(id)
+    if task:
+        return ResponseModel(task, "task data retrieved successfully")
+    return ErrorResponseModel("An error occurred.", 404, "task doesn't exist.")
+
+#Update
+@router.put("/{id}")
+async def update_task_data(id: str, req: UpdateTaskModel = Body(...)):
+    req = {k: v for k, v in req.dict().items() if v is not None}
+    updated_task = await update_task(id, req)
+    if updated_task:
+        return ResponseModel(
+            "task with ID: {} name update is successful".format(id),
+            "task name updated successfully",
+        )
+    return ErrorResponseModel(
+        "An error occurred",
+        404,
+        "There was an error updating the task data.",
+    )
+
+#Delete
+@router.delete("/{id}", response_description="task data deleted from the database")
+async def delete_task_data(id: str):
+    deleted_task = await delete_task(id)
+    if deleted_task:
+        return ResponseModel(
+            "task with ID: {} removed".format(id), "task deleted successfully"
+        )
+    return ErrorResponseModel(
+        "An error occurred", 404, "task with id {0} doesn't exist".format(id)
+    )
